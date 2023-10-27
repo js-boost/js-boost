@@ -1,5 +1,7 @@
 # @js-boost
 
-## Package
+The @js-boost org collects and shares various js extension
 
-- [@js-boost/xlf-translator](https://github.com/js-boost/js-boost/tree/main/packages/translate-xlf)
+## Packages
+
+- [@js-boost/xlf-translator](https://github.com/js-boost/js-boost/tree/main/packages/xlf-translator)
