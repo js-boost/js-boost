@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/js-boost/js-boost"
   },
-  "homepage": "https://github.com/js-boost/js-boost/tree/main/packages/xlf-translate",
+  "homepage": "https://github.com/js-boost/js-boost/tree/main/packages/xlf-translator",
   "keywords": [
     "xlf",
     "translate",
