@@ -1,0 +1,47 @@
+{
+  "name": "translate-xlf",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/translate-xlf/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/translate-xlf",
+        "main": "packages/translate-xlf/src/index.ts",
+        "tsConfig": "packages/translate-xlf/tsconfig.lib.json",
+        "assets": ["packages/translate-xlf/*.md"]
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs translate-xlf {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/translate-xlf/**/*.ts",
+          "packages/translate-xlf/package.json"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/translate-xlf/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}
