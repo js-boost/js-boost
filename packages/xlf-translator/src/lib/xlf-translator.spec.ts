@@ -1,6 +1,6 @@
 describe('translateXlf', () => {
   it('should work', () => {
-    // expect(XlfTranslator()).toEqual('translate-xlf');
+    // expect(XlfTranslator()).toEqual('xlf-translator');
     expect(true).toBeTruthy();
   });
 });

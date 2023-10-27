@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "nx run translate-xlf:build"
+    "build": "nx run xlf-translator:build",
+    "publish": "nx run xlf-translator:publish"
   },
   "private": true,
   "dependencies": {

@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@js-boost/translate-xlf": ["packages/translate-xlf/src/index.ts"]
+      "@js-boost/xlf-translator": ["packages/xlf-translator/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

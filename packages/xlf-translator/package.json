@@ -1,0 +1,27 @@
+{
+  "name": "@js-boost/xlf-translator",
+  "version": "0.0.1",
+  "description": "An XLF translator which auto-translates your XLF files into the target locales",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/js-boost/js-boost"
+  },
+  "homepage": "https://github.com/js-boost/js-boost/tree/main/packages/xlf-translate",
+  "keywords": [
+    "xlf",
+    "translate",
+    "translate xlf",
+    "auto-translate xlf"
+  ],
+  "author": "Marcell Kiss <hello@marcell.tech> (https://marcell.tech/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/js-boost/js-boost/issues"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "type": "commonjs",
+  "main": "./src/index.js",
+  "typings": "./src/index.d.ts"
+}
