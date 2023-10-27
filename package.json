@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "test": "nx run xlf-translator:test",
     "build": "nx run xlf-translator:build",
     "publish": "nx run xlf-translator:publish"
   },
