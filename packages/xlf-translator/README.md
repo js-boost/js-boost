@@ -1,6 +1,12 @@
 # XLF Translator
 
-An XLF translator which auto-translates your XLF files into the target locales
+XLF Translator takes an XLF file as an input (e.g. `terms.xlf`), goes through all the translation units,
+translates them to the target language (locale) and saves them to a target file (e.g.`terms.de.xlf`).
+
+If the file already exists, XLF Translator compares the ids of the translation units, if something already exists in the target file,
+it won't be overwritten.
+
+This way, manual editions are possible after the auto-translations. They are not going to be overwritten.
 
 ## Feedback
 
