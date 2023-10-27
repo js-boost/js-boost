@@ -64,4 +64,5 @@ Execute it like this:
 > `ts-node translate-xlf.ts`
 
 And watch the results:
+
 ![console output](./assets/console-output.png)
