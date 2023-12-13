@@ -1,0 +1,31 @@
+{
+  "name": "@jsboost/private-props",
+  "version": "1.0.0",
+  "description": "Tool to refactor your TypeScript private properties to native JavaScript properties with # prefix",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jsboost/jsboost"
+  },
+  "homepage": "https://github.com/jsboost/jsboost/tree/main/packages/private-props",
+  "keywords": [
+    "typescript",
+    "ts",
+    "javascript",
+    "js",
+    "private variables",
+    "transform ts private properties to native / pure js with # prefix",
+    "convert typescript private properties to pure javascript with # prefix"
+  ],
+  "author": "Marcell Kiss <hello@marcell.tech> (https://marcell.tech/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jsboost/jsboost/issues"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "ts-morph": "^21.0.0"
+  },
+  "type": "commonjs",
+  "main": "./src/index.js",
+  "typings": "./src/index.d.ts"
+}

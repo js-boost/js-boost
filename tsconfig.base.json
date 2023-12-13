@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@js-boost/xlf-translator": ["packages/xlf-translator/src/index.ts"]
+      "@jsboost/private-props": ["packages/private-props/src/index.ts"],
+      "@jsboost/xlf-translator": ["packages/xlf-translator/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

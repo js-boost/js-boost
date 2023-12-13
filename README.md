@@ -1,7 +1,8 @@
-# @js-boost
+# @jsboost
 
-The @js-boost org collects and shares various js extension
+The @jsboost org collects and shares various js extension
 
 ## Packages
 
-- [@js-boost/xlf-translator](https://github.com/js-boost/js-boost/tree/main/packages/xlf-translator)
+- [@jsboost/xlf-translator](https://github.com/jsboost/jsboost/tree/main/packages/xlf-translator)
+- [@jsboost/private-props](https://github.com/jsboost/jsboost/tree/main/packages/private-props)

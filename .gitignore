@@ -2,6 +2,8 @@
 # Result xlf files
 test.*.xlf
 
+*.private.md
+
 # compiled output
 dist
 tmp

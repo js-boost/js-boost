@@ -1,11 +1,16 @@
 {
-  "name": "js-boost",
+  "name": "jsboost",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "test": "nx run xlf-translator:test",
-    "build": "nx run xlf-translator:build",
-    "publish": "nx run xlf-translator:publish"
+    "test:xlf-translator": "nx run xlf-translator:test",
+    "build:xlf-translator": "nx run xlf-translator:build",
+    "publish:xlf-translator": "nx run xlf-translator:publish --ver 1.0.0",
+    "test:private-props": "nx run private-props:test",
+    "test:dist": "node dist/packages/private-props packages/private-props/src/lib/sample-folder",
+    "test": "npx ts-node packages/private-props/src/lib/private-props.ts packages/private-props/src/lib/sample-folder",
+    "build:private-props": "nx run private-props:build",
+    "publish:private-props": "nx run private-props:publish --ver 1.0.0"
   },
   "private": true,
   "dependencies": {

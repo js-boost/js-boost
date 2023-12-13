@@ -1,4 +1,4 @@
-import * as chalk from 'chalk';
+import chalk from 'chalk';
 import * as fs from 'fs';
 import * as util from 'util';
 import * as xml2js from 'xml2js';
@@ -13,93 +13,80 @@ export class XlfTranslator {
   constructor(
     private inputXlfFilePath: string,
     private localeFiles: LocaleFile[],
-    private translate: TranslateFunction
+    private translate: TranslateFunction,
+    private translationDelay = 500
   ) {
     console.log(chalk.green('XlfTranslator starts with the following params:'));
     console.log(`inputXlfFilePath:`, inputXlfFilePath);
     console.log(`localeFiles:`, localeFiles);
   }
 
-  async start(): Promise<void> {
+  async start() {
     try {
       // Step 1: Create termsMap file
       const originalTermsMap = await this.getTermsMap();
 
       // Step 2: Loop through locales and update translation files
-      const localeExecutions$ = this.localeFiles.map(
-        async ({ locale, filePath }) => {
-          const termsMap = new Map(originalTermsMap);
+      this.localeFiles.forEach(async ({ locale, filePath }) => {
+        const termsMap = new Map(structuredClone(originalTermsMap));
 
-          // Copy-paste file if it doesn't exist
-          try {
-            await this.fileExists$(filePath, fs.constants.R_OK);
-          } catch (error) {
-            await this.copyFile$(this.inputXlfFilePath, filePath);
-          }
-
-          const xmlJson = await this.getXmlJsonByPath(filePath);
-          const transUnits = xmlJson.xliff.file[0].body[0]['trans-unit'];
-          console.log(`There are ${transUnits.length} terms for ${locale}`);
-
-          const localeTermsMap = new Map<number, string>(
-            transUnits.map((transUnit: any) => [transUnit.$.id, transUnit])
-          );
-          const newTransUnits$ = this.getNewTransUnits$(
-            termsMap,
-            localeTermsMap,
-            locale
-          );
-
-          xmlJson.xliff.file[0].body[0]['trans-unit'] = await Promise.all(
-            newTransUnits$
-          );
-
-          // Convert the JavaScript object back to XML
-          await this.saveFile(xmlJson, filePath);
-
-          return;
+        // Copy-paste file if it doesn't exist
+        try {
+          await this.fileExists$(filePath, fs.constants.R_OK);
+        } catch (error) {
+          await this.copyFile$(this.inputXlfFilePath, filePath);
         }
-      );
 
-      await Promise.all(localeExecutions$);
+        const xmlJson = await this.getXmlJsonByPath(filePath);
+        const transUnits = xmlJson.xliff.file[0].body[0]['trans-unit'];
+        const localeTermsMap = new Map(
+          transUnits.map((transUnit: any) => [transUnit.$.id, transUnit])
+        );
 
-      return;
+        console.log(`There are ${transUnits.length} terms for ${locale}`);
+        let counter = 0;
+        const transUnits$ = Array.from(termsMap).map(
+          async ([id, transUnit]) => {
+            let newTransUnit: any = localeTermsMap.get(id);
+
+            if (!newTransUnit || !newTransUnit.target) {
+              // Do translation
+              newTransUnit = transUnit;
+              let sourceText = newTransUnit.source[0];
+              // A small delay, to avoid DDOSing the translation API
+              await new Promise((resolve) =>
+                setTimeout(resolve, this.translationDelay)
+              );
+              const translationText = await this.translate(sourceText, locale);
+              newTransUnit.target = [translationText];
+
+              console.log(
+                chalk.yellow(
+                  `Translated [${locale}], '${sourceText}' to '${translationText}' | id: ${transUnit.$.id}`
+                )
+              );
+            }
+
+            if (++counter % 50 === 0) {
+              console.log(
+                `Processed ${chalk.green(`${counter} terms`)} for ${locale}`
+              );
+            }
+
+            return newTransUnit;
+          }
+        );
+
+        xmlJson.xliff.file[0].body[0]['trans-unit'] = await Promise.all(
+          transUnits$
+        );
+
+        // Convert the JavaScript object back to XML
+        this.saveFile(xmlJson, filePath);
+      });
     } catch (error) {
       console.error(error);
     }
-  }
-
-  private getNewTransUnits$(
-    termsMap: Map<number, any>,
-    localeTermsMap: Map<number, any>,
-    locale: Locale
-  ): Promise<any>[] {
-    let counter = 0;
-    return Array.from(termsMap).map(async ([id, transUnit]) => {
-      let newTransUnit: any = localeTermsMap.get(id);
-
-      if (!newTransUnit || !newTransUnit.target) {
-        // Do translation
-        newTransUnit = transUnit;
-        let sourceText = newTransUnit.source[0];
-        const translationText = await this.translate(sourceText, locale);
-        newTransUnit.target = [translationText];
-
-        console.log(
-          chalk.yellow(
-            `Translated [${locale}], '${sourceText}' to '${translationText}' | id: ${transUnit.$.id}`
-          )
-        );
-      }
-
-      if (++counter % 50 === 0) {
-        console.log(
-          `Processed ${chalk.green(`${counter} terms`)} for ${locale}`
-        );
-      }
-
-      return newTransUnit;
-    });
   }
 
   private async getTermsMap() {

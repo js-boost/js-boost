@@ -11,15 +11,15 @@ This way, manual editions are possible after the auto-translations. They are not
 ## Feedback
 
 If something doesn't work as expected, leave an issue here:  
-https://github.com/js-boost/js-boost/issues
+https://github.com/jsboost/jsboost/issues
 
 ## Installation
 
-`npm i @js-boost/xlf-translator --save-dev`
+`npm i @jsboost/xlf-translator --save-dev`
 
 ## Import
 
-`import import { XlfTranslator } from @js-boost/xlf-translator`
+`import import { XlfTranslator } from @jsboost/xlf-translator`
 
 ## Usage
 
